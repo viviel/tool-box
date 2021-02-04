@@ -4,9 +4,25 @@
     <groupId>com.github.viviel.tool</groupId>
     <artifactId>tool-box</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>tool-box</name>
     <url>http://maven.apache.org</url>
+
+    <description>
+        A collection of tools
+    </description>
+
+    <modules>
+        <module>tool-excelkit</module>
+    </modules>
+
+    <properties>
+<!--        <revision>0.0.1-RELEASES</revision>-->
+        <revision>0.0.1-SNAPSHOT</revision>
+
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -16,4 +32,85 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>sonatype_releases</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>gpg</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:viviel/tool-box.git</connection>
+        <developerConnection>scm:git:git@github.com:viviel/tool-box.git</developerConnection>
+        <url>https://github.com/viviel/tool-box.git</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>viviel</name>
+            <email>viviel@163.com</email>
+            <organization>https://github.com/viviel</organization>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <repository>
+            <id>sonatype_releases</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>sonatype_snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
